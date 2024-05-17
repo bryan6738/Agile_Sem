@@ -1,0 +1,20 @@
+from flask_testing import TestCase
+from app import create_app, db
+from app.config import DeploymentConfig
+from flask import url_for
+from flask import blueprints
+
+main = blueprints('main',__name__)
+from app import models, routes
+flaskApp= create_app(TestConfig)
+@main.route("/groups")
+def groups():
+    redirect(location=url_for("main.groups"))
+    
+from app.blueprints import main 
+flaskApp.register_blueprint(main)
+def create_app(config) :
+    flaskApp = Flask(__name__)
+    flaskApp.config.from_object(config)
+    db.init_app(flaskApp)
+    return flaskApp
